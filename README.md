@@ -8,8 +8,6 @@
 - [PPO 算法](#ppo-算法)
 - [GRPO 算法](#grpo-算法)
 - [PPO vs GRPO 对比](#ppo-vs-grpo-对比)
-- [代码结构](#代码结构)
-- [使用方法](#使用方法)
 - [数学原理](#数学原理)
 
 ## 简介
@@ -49,14 +47,6 @@ for iteration in range(num_iterations):
         optimizer.step()
 ```
 
-### 关键组件
-
-| 组件 | 说明 |
-|------|------|
-| `PPOAgent` | 包含策略网络和价值网络 |
-| `ValueHead` | 价值网络头，预测状态价值 |
-| `compute_gae` | 计算广义优势估计 |
-| `ppo_loss` | 裁剪目标函数 |
 
 ## GRPO 算法
 
@@ -87,14 +77,6 @@ for iteration in range(num_iterations):
             optimizer.step()
 ```
 
-### 关键组件
-
-| 组件 | 说明 |
-|------|------|
-| `GRPOAgent` | 包含策略网络和冻结的参考模型 |
-| `Reference Model` | 提供 KL 散度计算的基准 |
-| `compute_grpo_advantages` | 组内相对优势计算 |
-| `grpo_loss` | PPO-clip + KL 惩罚 |
 
 ## PPO vs GRPO 对比
 
@@ -129,77 +111,13 @@ for iteration in range(num_iterations):
 └── README.md             # 本文件
 ```
 
-### PPO 代码结构
 
-```python
-class ValueHead(nn.Module)
-class PPOAgent(nn.Module)
-    ├── policy_model      # 策略网络
-    ├── value_head        # 价值网络
-    ├── forward()
-    ├── get_action_and_value()
-    └── evaluate_actions()
-
-def compute_rewards()       # 奖励计算
-def compute_gae()          # GAE 优势计算
-def ppo_loss()             # PPO 损失函数
-def collect_rollouts()     # 经验收集
-def update_policy()        # 策略更新
-def train_ppo()           # 主训练循环
-```
-
-### GRPO 代码结构
-
-```python
-class GRPOAgent(nn.Module)
-    ├── policy_model       # 策略网络
-    ├── reference_model    # 参考模型（冻结）
-    ├── forward()
-    ├── get_reference_logits()
-    ├── sample_actions()
-    └── evaluate_actions()
-
-def compute_rewards()           # 奖励计算
-def compute_grpo_advantages()  # 组内相对优势
-def compute_kl_divergence()    # KL 散度计算
-def grpo_loss()                # GRPO 损失函数
-def collect_group_rollouts()   # 组采样
-def update_policy_grpo()       # 策略更新
-def train_grpo()              # 主训练循环
-```
-
-## 使用方法
 
 ### 环境要求
 
 ```bash
 pip install torch transformers datasets
 ```
-
-### 运行 PPO
-
-```bash
-python ppo_from_scratch.py
-```
-
-### 运行 GRPO
-
-```bash
-python grpo_from_scratch.py
-```
-
-### 关键超参数
-
-| 参数 | PPO | GRPO | 说明 |
-|------|-----|------|------|
-| `num_iterations` | 2 | 2 | 训练迭代次数 |
-| `steps_per_iter` | 2 | 2 | 每轮问题数 |
-| `group_size` | - | 4 | 组采样数量（仅GRPO）|
-| `max_new_tokens` | 10 | 100 | 最大生成长度 |
-| `learning_rate` | 5e-6 | 5e-6 | 学习率 |
-| `ppo_epochs` | 2 | 2 | 每样本更新次数 |
-| `epsilon` | 0.2 | 0.2 | PPO clip 参数 |
-| `beta` | - | 0.01 | KL 惩罚系数（仅GRPO）|
 
 ## 数学原理
 
