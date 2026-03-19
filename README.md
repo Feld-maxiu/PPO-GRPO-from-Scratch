@@ -40,8 +40,6 @@ L7/
 │   ├── train_dpo.py           # DPO training entry point (online)
 │   └── evaluate.py            # Standalone evaluation
 ├── gsm8k/                     # GSM8K dataset (local copy)
-├── ppo_from_scratch.py        # Original reference implementation
-├── grpo_from_scratch.py       # Original reference implementation
 └── requirements.txt
 ```
 
