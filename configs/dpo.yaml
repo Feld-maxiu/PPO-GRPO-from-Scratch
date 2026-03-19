@@ -1,0 +1,5 @@
+# DPO-specific overrides
+algorithm: dpo
+beta: 0.1
+num_generations_per_query: 2
+temperature: 1.0

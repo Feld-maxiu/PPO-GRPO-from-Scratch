@@ -1,0 +1,38 @@
+# Shared defaults for all algorithms
+model_path: "C:\\Users\\曾\\Desktop\\84Post-training of LLMs\\L5\\models\\Qwen2___5-0___5B-Instruct"
+dataset_path: "C:\\Users\\曾\\Desktop\\84Post-training of LLMs\\L7\\gsm8k"
+output_dir: "./outputs"
+
+system_prompt: >-
+  Please solve the problem and answer in the format of 'The answer is...', no process required.
+  Always include the final numeric answer inside \boxed{}.
+
+# Training
+seed: 42
+learning_rate: 5.0e-6
+max_grad_norm: 0.5
+use_amp: true
+train_samples: 500
+eval_samples: 200
+num_iterations: 10
+steps_per_iteration: 50
+ppo_epochs: 2
+max_new_tokens: 256
+epsilon: 0.2
+
+# Rewards
+correctness_weight: 1.0
+format_weight: 0.2
+length_penalty_weight: 0.0
+max_response_length: 512
+
+# Evaluation
+eval_every: 1
+eval_max_new_tokens: 256
+
+# Checkpoint
+save_every: 1
+resume_from: null
+
+# Logging
+log_dir: "./outputs/runs"

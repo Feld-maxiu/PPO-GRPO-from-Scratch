@@ -1,0 +1,5 @@
+# GRPO-specific overrides
+algorithm: grpo
+group_size: 4
+beta: 0.01
+temperature: 1.0
